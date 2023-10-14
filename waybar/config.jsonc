@@ -1,0 +1,114 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "width": 1050,
+    "margin-bottom": 5,
+    "modules-left": ["clock", "hyprland/workspaces", "custom/weather", "cava"],
+    "modules-center": ["custom/playerctl"],
+    "modules-right": ["custom/launcher", "tray", "network", "bluetooth", "hyprland/language", "backlight", "pulseaudio", "battery"],
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "on-scroll-up": "hyprctl dispatch workspace e+1",
+      "on-scroll-down": "hyprctl dispatch workspace e-1",
+      "format-icons": {
+        "active": "",
+        "default": ""
+      },
+      "active-only": false,
+      "all-outputs": true
+    },
+    "clock": {
+      "interval": 1,
+      "timezone": "Europe/Moscow",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+      "format": "<span size='14pt' font_weight='bold'>{:%H:%M:%S}</span>",
+      "format-alt": "<span size='14pt' font_weight='bold'>{:%d/%m/%Y}</span>"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "🇺🇸",
+        "format-ru": "🇷🇺"
+    },
+    "backlight": {
+        "on-scroll-up": "brillo -A 10",
+        "on-scroll-down": "light -U 10",
+        "device": "eDP-1",
+        "format": "{icon}",
+        "format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+        "tooltip-format": "{percent}%"
+    },
+    "network": {
+        "format-wifi": "{icon}",
+        "format-disconnected": "󰤭",
+        "tooltip-format": "{essid}",
+        "on-click": "~/.config/waybar/scripts/network/rofi-network-manager.sh",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+    },
+    "pulseaudio": {
+        "format": "{icon}{volume}",
+        "format-muted": "󰸈",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol &",
+        "tooltip": true
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "good": 75,
+            "warning": 30,
+            "critical": 15
+        },
+        "on-click": "poweralertd & pkill poweralertd",
+        "format": "{icon}{capacity}",
+        "format-full": "🚨",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "custom/weather": {
+      "exec": "python ~/.scripts/waybar-wttr.py",
+      "restart-interval": 7200,
+      "return-type": "json"
+    },
+    "custom/hyprpicker": {
+        "format": "󰏘",
+        "tooltip": false,
+        "on-click": "exec hyprpicker | wl-copy &"
+    },
+    "bluetooth": {
+        "format-off": "󰂲",
+        "format-on": "󰂱",
+        "format-connected": "󰂯",
+        "tooltip": true,
+        "tooltip-format": "{status}",
+        "on-click": "exec blueman-manager &"
+    },
+   "custom/lock": {
+       "tooltip" : false,
+       "on-click": "sleep 0.5 && swaylock",
+       "format" : ""
+    },
+    "custom/power-menu": {
+        "format": "",
+        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh &",
+        "tooltip": false
+    }, 
+    "custom/launcher": {
+        "format": " ",
+        "on-click": "rofi -show drun &",
+        "tooltip": false
+    },
+    "custom/playerctl": {
+      "format": "<span>{}</span>",
+      "return-type": "json",
+      "max-length": 35,
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} ~ {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "on-click-middle": "playerctl play-pause",
+      "on-click": "playerctl previous",
+      "on-click-right": "playerctl next"
+  }
+}

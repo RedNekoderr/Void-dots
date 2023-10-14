@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+source=$1
+destination=$2
+rsync -av $source $destination
+rm -rf $source
